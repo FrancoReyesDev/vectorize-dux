@@ -5,3 +5,6 @@
 # React Router
 /.react-router/
 /build/
+ollama/
+qdrant_data/
+data/

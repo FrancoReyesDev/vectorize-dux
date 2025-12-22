@@ -9,6 +9,9 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { RootHeader } from "./components/root/root-header";
+import { Separator } from "./components/ui/separator";
+import { Toaster } from "./components/ui/sonner";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,7 +36,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div className="grid grid-rows-[auto_1fr] gap-4 h-dvh ">
+          <RootHeader />
+          <main className="container mx-auto p-2">{children}</main>
+        </div>
+        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </body>
