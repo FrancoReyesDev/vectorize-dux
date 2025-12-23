@@ -6,6 +6,7 @@ services:
     volumes:
       - ./data:/app/data
     environment:
+      restart: unless-stopped
       # OLLAMA_HOST: http://ollama:11434
       # OLLAMA_MODEL: ${OLLAMA_MODEL}
       # EMBEDDING_DIM: ${EMBEDDING_DIM}
