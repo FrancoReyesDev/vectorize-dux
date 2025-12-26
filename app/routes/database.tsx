@@ -71,7 +71,17 @@ export async function action({ request }: Route.ActionArgs) {
     })
   );
 
-  return Effect.runFork(program);
+  console.log("Starting ETL process...");
+  console.log("LMDB_PATH:", process.env.LMDB_PATH);
+
+  return Effect.runFork(
+    program.pipe(
+      Effect.tap(() => console.log("ETL process started successfully")),
+      Effect.tapError((error) =>
+        Effect.sync(() => console.error("ETL process failed to start", error))
+      )
+    )
+  );
 }
 
 export default function Database({ actionData }: Route.ComponentProps) {
