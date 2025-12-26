@@ -74,9 +74,10 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
   const copyToClipboard = (item: ItemDomain) => {
     const text = `*\`${item.title}\`* 
 
-\`${formatPrice(item.priceLists.list?.price.costRelatedList)}\` *PRECIO LISTA 3 CUOTAS SIN INTERES*
+\`${formatPrice(item.priceLists.list?.price.sellPrice)}\` *PRECIO LISTA 3 CUOTAS SIN INTERES*
 
 \`${formatPrice(item.priceLists.card?.price.sellPrice)}\` con *TARJETA DE CREDITO EN 1 PAGO o DEBITO*. 💳 
+
 \`${formatPrice(item.priceLists.cash?.price.sellPrice)}\` en *EFECTIVO o TRANSFERENCIA BANCARIA* 💵`;
     navigator.clipboard.writeText(text);
     toast(`${item.sku} - Copiado al portapapeles`);
@@ -117,11 +118,14 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
                     <TableHead>Producto</TableHead>
                     <TableHead>Marca</TableHead>
                     <TableHead>Proveedor</TableHead>
-                    <TableHead className="text-right">Lista 3 Cuotas</TableHead>
-                    <TableHead className="text-right">Precio Lista</TableHead>
-                    <TableHead className="text-right">Precio Tarjeta</TableHead>
                     <TableHead className="text-right">
-                      Precio Efectivo
+                      3 Cuotas / Lista
+                    </TableHead>
+                    <TableHead className="text-right">
+                      1 Pago / Tarjeta
+                    </TableHead>
+                    <TableHead className="text-right">
+                      Efectivo / Transferencia
                     </TableHead>
                     <TableHead className="text-center">Acciones</TableHead>
                   </TableRow>
@@ -137,11 +141,6 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
                       </TableCell>
                       <TableCell>{item.brand}</TableCell>
                       <TableCell>{item.vendor}</TableCell>
-                      <TableCell className="text-right">
-                        {formatPrice(
-                          item.priceLists.list?.price.costRelatedList
-                        )}
-                      </TableCell>
                       <TableCell className="text-right">
                         {formatPrice(item.priceLists.list?.price.sellPrice)}
                       </TableCell>
