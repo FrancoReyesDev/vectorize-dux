@@ -24,6 +24,7 @@ import {
 import { Search, Copy } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { toast } from "sonner";
+import { itemDomainToMessage } from "~/mappers/item-domain-to-message.mapper";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -72,15 +73,14 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
   };
 
   const copyToClipboard = (item: ItemDomain) => {
-    const text = `*\`${item.title}\`* 
-
-\`${formatPrice(item.priceLists.list?.price.sellPrice)}\` *PRECIO LISTA 3 CUOTAS SIN INTERES*
-
-\`${formatPrice(item.priceLists.card?.price.sellPrice)}\` con *TARJETA DE CREDITO EN 1 PAGO o DEBITO*. 💳 
-
-\`${formatPrice(item.priceLists.cash?.price.sellPrice)}\` en *EFECTIVO o TRANSFERENCIA BANCARIA* 💵`;
+    const text = itemDomainToMessage(item);
     navigator.clipboard.writeText(text);
     toast(`${item.sku} - Copiado al portapapeles`);
+  };
+
+  const copySkuToClipboard = (sku: string) => {
+    navigator.clipboard.writeText(sku);
+    toast(`${sku} - Copiado al portapapeles`);
   };
 
   return (
@@ -134,7 +134,13 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
                   {results.map((item) => (
                     <TableRow key={item.sku}>
                       <TableCell className="font-mono text-xs">
-                        {item.sku}
+                        <span
+                          onClick={() => copySkuToClipboard(item.sku)}
+                          className="cursor-pointer underline decoration-1 decoration-muted-foreground/30 hover:decoration-foreground hover:decoration-2 transition-all"
+                          title="Click para copiar SKU"
+                        >
+                          {item.sku}
+                        </span>
                       </TableCell>
                       <TableCell className="font-medium">
                         {item.title}
@@ -142,22 +148,23 @@ export default function SearchPage({ loaderData }: Route.ComponentProps) {
                       <TableCell>{item.brand}</TableCell>
                       <TableCell>{item.vendor}</TableCell>
                       <TableCell className="text-right">
-                        {formatPrice(item.priceLists.list?.price.sellPrice)}
+                        {formatPrice(item.priceLists.list?.price.ivaSellPrice)}
                       </TableCell>
                       <TableCell className="text-right">
-                        {formatPrice(item.priceLists.card?.price.sellPrice)}
+                        {formatPrice(item.priceLists.card?.price.ivaSellPrice)}
                       </TableCell>
                       <TableCell className="text-right">
-                        {formatPrice(item.priceLists.cash?.price.sellPrice)}
+                        {formatPrice(item.priceLists.cash?.price.ivaSellPrice)}
                       </TableCell>
                       <TableCell className="text-center">
                         <Button
                           variant="ghost"
-                          size="sm"
+                          size="icon"
+                          className="h-6 w-6"
                           onClick={() => copyToClipboard(item)}
-                          title="Copiar información del producto"
+                          title="Copiar SKU"
                         >
-                          <Copy className="h-4 w-4" />
+                          <Copy className="h-3 w-3" />
                         </Button>
                       </TableCell>
                     </TableRow>

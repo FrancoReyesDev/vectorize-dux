@@ -42,6 +42,7 @@ export const parsePriceListFile = (
 
     const items = yield* Effect.gen(function* () {
       const aoj = yield* parseXlsx<DuxPriceListItemDTO>(file, { range: 7 });
+      console.log({ aoj });
       return aoj.map((item) => ({
         sku: item["Cod Producto"],
         currency: item.Moneda,

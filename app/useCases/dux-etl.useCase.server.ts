@@ -122,6 +122,8 @@ const getItemArray = ({
       parsePriceListFile(cashPriceListFile),
     ]);
 
+    console.log({ cashPriceList: cashPriceList.items[0] });
+
     const indexedListPrices = HashMap.fromIterable(
       listPriceList.items.map((item) => [item.sku, item])
     );
