@@ -56,9 +56,9 @@ export function duxToItemDomain({
     currency: itemDTO.MONEDA,
     internalTax: itemDTO["IMPUESTO INTERNO"],
     priceLists: {
-      list: mapToListPrice(listMetadata, listItem),
-      card: mapToListPrice(cardMetadata, cardItem),
-      cash: mapToListPrice(cashMetadata, cashItem),
+      list: mapToListPrice(listMetadata, listItem), // 3 cuotas
+      card: mapToListPrice(cardMetadata, cardItem), // 1 cuota
+      cash: mapToListPrice(cashMetadata, cashItem), // efectivo
     },
   };
 }
